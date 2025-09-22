@@ -1,13 +1,49 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useEffect } from 'react';
+import Layout from '../components/Layout';
+import HeroSection from '../components/home/HeroSection';
+import FeaturedInSection from '../components/home/FeaturedInSection';
+import TestimonialsSection from '../components/home/TestimonialsSection';
+import HowItWorksSection from '../components/home/HowItWorksSection';
+import FeaturesSection from '../components/home/FeaturesSection';
+import MissionSection from '../components/home/MissionSection';
+import PricingSection from '../components/home/PricingSection';
+import FAQSection from '../components/home/FAQSection';
 
 const Index = () => {
+  useEffect(() => {
+    // Intersection Observer for scroll reveal animations
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('revealed');
+          }
+        });
+      },
+      {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px',
+      }
+    );
+
+    // Observe all scroll-reveal elements
+    const scrollElements = document.querySelectorAll('.scroll-reveal');
+    scrollElements.forEach((el) => observer.observe(el));
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
-    </div>
+    <Layout>
+      <HeroSection />
+      <FeaturedInSection />
+      <TestimonialsSection />
+      <HowItWorksSection />
+      <FeaturesSection />
+      <MissionSection />
+      <PricingSection />
+      <FAQSection />
+    </Layout>
   );
 };
 
